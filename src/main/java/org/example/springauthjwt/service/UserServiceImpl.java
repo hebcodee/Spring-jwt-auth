@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.springauthjwt.controller.dto.LoginRequest;
-import org.example.springauthjwt.domain.User;
+import org.example.springauthjwt.entities.User;
 import org.example.springauthjwt.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

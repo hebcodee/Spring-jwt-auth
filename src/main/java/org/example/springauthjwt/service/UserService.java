@@ -1,7 +1,7 @@
 package org.example.springauthjwt.service;
 
 import org.example.springauthjwt.controller.dto.LoginRequest;
-import org.example.springauthjwt.domain.User;
+import org.example.springauthjwt.entities.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;

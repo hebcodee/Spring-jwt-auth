@@ -1,6 +1,6 @@
 package org.example.springauthjwt;
 
-import org.example.springauthjwt.domain.User;
+import org.example.springauthjwt.entities.User;
 import org.example.springauthjwt.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

@@ -1,7 +1,7 @@
 package org.example.springauthjwt.api;
 
 import lombok.RequiredArgsConstructor;
-import org.example.springauthjwt.domain.User;
+import org.example.springauthjwt.entities.User;
 import org.example.springauthjwt.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
