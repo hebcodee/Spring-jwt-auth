@@ -31,16 +31,24 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUsername() {
+    public String getName() {
         return name;
     }
 
-    public void setUsername(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public void setEmail(String email) {
+        this.name = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setPassword(String password) {
