@@ -3,7 +3,9 @@ package org.example.springauthjwt.repository;
 import org.example.springauthjwt.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepo extends JpaRepository<User, Long> {
-    User findByEmail(String email);
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
     User findByName(String name);
 }

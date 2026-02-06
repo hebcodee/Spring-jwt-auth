@@ -3,12 +3,14 @@ package org.example.springauthjwt.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.springauthjwt.controller.dto.LoginRequest;
 import org.example.springauthjwt.domain.User;
-import org.example.springauthjwt.repository.UserRepo;
+import org.example.springauthjwt.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -19,7 +21,7 @@ import java.util.List;
 @Transactional
 @Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
-    private final UserRepo userRepo;
+    private final UserRepository userRepo;
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
@@ -53,6 +55,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<User> getUsers() {
         log.info("Fetching all users");
         return userRepo.findAll();
+    }
+
+    @Override
+    public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder, User user){
+        return passwordEncoder.matches(loginRequest.password(), user.getPassword());
     }
 
 }
