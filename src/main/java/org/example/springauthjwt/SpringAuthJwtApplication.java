@@ -1,7 +1,8 @@
 package org.example.springauthjwt;
 
+import jakarta.transaction.Transactional;
 import org.example.springauthjwt.entities.User;
-import org.example.springauthjwt.service.UserService;
+import org.example.springauthjwt.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,14 +23,23 @@ public class SpringAuthJwtApplication {
     }
 
     @Bean
-    CommandLineRunner run(UserService userService){
+    @Transactional
+    CommandLineRunner run(UserRepository userRepository){
         return args -> {
-          userService.saveUser(new User(null, "Herberth Guimaraes", "heb@gmail.com", "1234"));
-          userService.saveUser(new User(null, "Will Smith", "will@gmail.com", "1234"));
-          userService.saveUser(new User(null, "Jim Carry", "jin@gmail.com", "1234"));
-          userService.saveUser(new User(null, "Willian Bonner", "bonner@gmail.com", "1234"));
+            //var userHeb = userRepository.findByEmail("heb@gmail.com");
+            var userHeb = userRepository.findByName("heb");
 
-
+            userHeb.ifPresentOrElse(
+                    user -> {
+                        System.out.println("User alredy exists");
+                    },
+                    () -> {
+                        var user = new User();
+                        user.setName("heb");
+                        user.setPassword(passwordEncoder().encode("1234"));
+                        userRepository.save(user);
+                    }
+            );
         };
     }
 }
