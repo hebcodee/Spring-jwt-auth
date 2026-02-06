@@ -5,16 +5,38 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.springauthjwt.domain.User;
 import org.example.springauthjwt.repository.UserRepo;
+import org.hibernate.sql.ast.tree.expression.Collation;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepo userRepo;
+
+    @Override
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        User user = userRepo.findByName(name);
+        if (user == null) {
+            log.error("User not found in the database");
+            throw new UsernameNotFoundException("User not found in database");
+        } else {
+            log.info("User found in the database: {}", name);
+        }
+        Collection<SimpleGrantedAuthority> authorities = List.of(
+                new SimpleGrantedAuthority("ROLE_ADMIN")
+        );
+        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), authorities);
+    }
 
     @Override
     public User saveUser(User user) {
@@ -34,4 +56,5 @@ public class UserServiceImpl implements UserService{
         log.info("Fetching all users");
         return userRepo.findAll();
     }
+
 }
