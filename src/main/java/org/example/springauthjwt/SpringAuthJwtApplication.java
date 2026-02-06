@@ -36,6 +36,7 @@ public class SpringAuthJwtApplication {
                     () -> {
                         var user = new User();
                         user.setName("heb");
+                        user.setEmail("heb@gmail.com");
                         user.setPassword(passwordEncoder().encode("1234"));
                         userRepository.save(user);
                     }
