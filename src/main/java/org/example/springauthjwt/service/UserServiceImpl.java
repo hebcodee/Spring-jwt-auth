@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService{
     public User getUser(Long id) {
         log.info("Fetching user {}", id);
         return userRepo.findById(id).orElse(null);
+
     }
 
     @Override
